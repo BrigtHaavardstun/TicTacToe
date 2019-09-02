@@ -233,11 +233,11 @@ def check_for_victory(board):
 
     right_left_diagonal_line = board[0][2] + board[1][1] + board[2][0]
     if right_left_diagonal_line == crosses_line:
-        CANVAS.create_line(0, 0, 600, 600, fill="red", width=2)
+        CANVAS.create_line(0, 600, 600, 0, fill="red", width=2)
         winner_screen(CROSSES)
         return True
     elif right_left_diagonal_line == circles_line:
-        CANVAS.create_line(0, 0, 600, 600, fill="red", width=2)
+        CANVAS.create_line(0, 600, 600, 0, fill="red", width=2)
         winner_screen(CIRCLE)
         return True
 
