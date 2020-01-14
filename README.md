@@ -6,6 +6,7 @@ TicTacToe for school visits
 
 # NOTE
 This is work in progress, any feedback is welcome!
+In a diffrent branch there is a simpler version of the game!
 
 # IDEAS FOR PRESENTING
 * 1:
