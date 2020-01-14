@@ -5,8 +5,8 @@ TicTacToe for school visits
 * Uses tkinter library 
 
 # NOTE
-This is work in progress, any feedback is welcome!
-In a diffrent branch there is a simpler version of the game!
+* This is work in progress, any feedback is welcome!
+* In a diffrent branch there is a simpler version of the game!
 
 # IDEAS FOR PRESENTING
 * 1:
