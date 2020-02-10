@@ -6,7 +6,7 @@ Updated on Tue Jan 28 2020
 @author: brigthavardstun
 """
 from tkinter import *
-
+from ttt_magic import show_board
 
 """
 Program settings
@@ -24,6 +24,7 @@ Setting up Canvas
 main = Tk()
 
 CANVAS = Canvas(main, width=WIDTH, height=HEIGHT)
+
 CANVAS.pack()
 
 """
@@ -34,9 +35,9 @@ spillerX = "X"
 spillerO = "O"
 EMPTY = "#"
 
-BOARD = [[EMPTY, spillerX, EMPTY],
-         [spillerO, EMPTY, EMPTY],
-         [EMPTY, EMPTY, spillerX]]
+BOARD = [[EMPTY, EMPTY, EMPTY],
+         [EMPTY, EMPTY, EMPTY],
+         [EMPTY, EMPTY, EMPTY]]
 
 
 def ledig_plass(pos_x, pos_y):
@@ -148,10 +149,10 @@ def main_game_loop(pos_x, pos_y):
     draw = check_draw()
     if draw:
         draw_screen()
-    show_board()
+    show_board(CANVAS, BOARD, spillerX=spillerX, spillerO=spillerO)
 
 
-def legg_brikke_til_i_brettet(player, mouse_x, mouse_y):
+def legg_brikke_til_i_brettet(player, x, y):
     """
     KODES LIVE!
 
@@ -162,7 +163,7 @@ def legg_brikke_til_i_brettet(player, mouse_x, mouse_y):
     :param mouse_y:
     :return:
     """
-    BOARD[mouse_y][mouse_x] = player
+    BOARD[y][x] = player
 
 
 def get_next_player():
@@ -192,59 +193,6 @@ def get_next_player():
 
 
 
-def show_board():
-    """
-    Uses the current BOARD to draw the GUI
-
-    :return:
-    """
-
-    # Idea: hva om show_board ble importert gjennom en tic tac toe magic modul, så det ikke ble så rotet?
-    global BOARD, CANVAS  # TODO: burde dette fjernes (gjør ingenting), men viser hva som er relevant.
-    CANVAS.delete("all")  # re-draws everything
-
-
-    CANVAS.create_line(b_rute, 0, b_rute, HEIGHT)  # First vertical line
-    CANVAS.create_line(b_rute * 2, 0, b_rute * 2, HEIGHT)  # Second vertical line
-
-    CANVAS.create_line(0, h_rute, WIDTH, h_rute)  # First horizontal line
-    CANVAS.create_line(0, h_rute * 2, WIDTH, h_rute * 2)  # Second horizontal line
-
-    for y in range(3):
-        for x in range(3):
-            player = BOARD[y][x]
-            draw(player, x, y)
-
-
-def draw(player, x_cord, y_cord):
-    """
-    Draws in one element in the canvas.
-
-    NOTE: This method should be given.
-
-    :param player:
-    :param x_cord:
-    :param y_cord:
-    :param w_part:
-    :param h_part:
-    :return:
-    """
-    global CANVAS
-    if player == spillerX:
-        CANVAS.create_line(
-            x_cord * b_rute, y_cord * h_rute,
-            (x_cord + 1) * b_rute, (y_cord + 1) * h_rute
-        )
-        CANVAS.create_line(
-            x_cord * b_rute, (y_cord + 1) * h_rute,
-            (x_cord + 1) * b_rute, y_cord * h_rute
-        )
-    elif player == spillerO:
-        CANVAS.create_oval(
-            x_cord * b_rute, y_cord * h_rute,
-            (x_cord + 1) * b_rute, (y_cord + 1) * h_rute
-        )
-
 
 # tells the canvas to run "click"-function when we click the canvas
 def click(mouse_event):
@@ -266,12 +214,12 @@ def canvas_to_grid(mouse_x, mouse_y):
     :param mouse_click: a mouse click
     :return: x_pos, y_pos
     """
-    x_pos = int(mouse_x / 200)
-    y_pos = int(mouse_y / 200)
+    x_pos = int(mouse_x / b_rute)
+    y_pos = int(mouse_y / h_rute)
     return x_pos, y_pos
 
 CANVAS.bind("<Button-1>", click)  # This makes a "click" on the canvas board call the method "click()"
 
 if __name__ == '__main__':
-    show_board()
+    show_board(CANVAS, BOARD, spillerX, spillerO)
     mainloop()
