@@ -1,10 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Aug 31 21:07:08 2019
 
-@author: brigthavardstun
-"""
 
 from tkinter import *
 import sys  # used to exit game
