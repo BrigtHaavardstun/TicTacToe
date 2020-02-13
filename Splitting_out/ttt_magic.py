@@ -76,12 +76,15 @@ def winning_area(board):
 
 
 def victory_click(mouseEvent):
+
     print("Game Done")
 
 
 def victory_screen(board, canvas, bredde, høyde):
     start, end = winning_area(board)
     canvas.create_line(start[0]*bredde, start[1]*høyde, end[0]*bredde, end[1]*høyde, fill="red", width=2)
+    canvas.create_text(300, 200, fill="darkblue", font="Times 40 italic bold",
+                       text="We got a winner!")
 
     canvas.bind("<Button-1>", victory_click)  # rebinds a click so we cannot continue to play the game.
     mainloop()
@@ -92,7 +95,10 @@ def draw_click(mouseEvent):
 
 
 def draw_screen(canvas):
+    canvas.create_text(300, 200, fill="darkblue", font="Times 40 italic bold",
+                       text="It's a draw!")
     canvas.bind("<Button-1>", draw_click)  # rebinds a click so we cannot continue to play the game.
+    mainloop()
 
 
 

@@ -18,6 +18,8 @@ HEIGHT = 600  # Høyden på skjermen
 b_rute = WIDTH/3  #bredde for en rute
 h_rute = HEIGHT/3  #høyde for en rute
 
+
+
 """
 Setting up Canvas
 
@@ -28,6 +30,11 @@ main = Tk()
 CANVAS = Canvas(main, width=WIDTH, height=HEIGHT)
 
 CANVAS.pack()
+
+
+
+
+
 
 """
 Globale variabler
@@ -45,22 +52,19 @@ BOARD = [[EMPTY, EMPTY, EMPTY],
 
 def ledig_plass(pos_x, pos_y):
     """
-    Denne skal løses live.
+    #TODO
 
     Gitt en x-posisjon og y-posisjon  finn ut om plassen er ledig, med å sjekke om den er "EMPTY" variabelen.
     :param pos_x:
     :param pos_y:
     :return: True hvis ledig, False hvis opptatt.
     """
-    if BOARD[pos_y][pos_x] == EMPTY:
-        return True
-    else:
-        return False
+    return True
 
 
 def check_victory():
     """
-    DENNE KAN BLI GJORT LIVE
+   #TODO
 
     Denne metoden sjekker om det er en vinner.
     :return: True hvis det er en vinner, False hvis ikke
@@ -70,6 +74,7 @@ def check_victory():
 
 
     # Horizontal
+    """
     for row in BOARD:
         if row == list(X_vinn):
             return True
@@ -89,23 +94,15 @@ def check_victory():
         return True
     elif BOARD[0][0] + BOARD[1][1] + BOARD[2][2] == O_vinn:
         return True
+    """
 
-
-    if BOARD[0][2] + BOARD[1][1]+BOARD[2][0] == X_vinn:
-        return True
-    elif BOARD[0][2] + BOARD[1][1]+BOARD[2][0] == O_vinn:
-        return True
+    # TODO: diagonal
 
     return False
 
 
 def check_draw():
-    for row in BOARD:
-        for element in row:
-            if element == EMPTY:  # bruke ledig_plass()?
-                return False
-
-    return True
+    return False
 
 
 
@@ -117,7 +114,7 @@ def check_draw():
 
 def legg_brikke_til_i_brettet(player, x, y):
     """
-    KODES LIVE!
+    #TODO
 
     Skal bare legge til spiller i brett på den gitte posisjonen.
 
@@ -126,35 +123,26 @@ def legg_brikke_til_i_brettet(player, x, y):
     :param mouse_y:
     :return:
     """
-    BOARD[y][x] = player
+    BOARD[x][y] = player
 
 
 def get_next_player():
     """
-    Denne skal løses live.
+    #TODO.
 
     Gitt dette brettet, tell antall spillerX og spillerO, den med færrest blir valgt.
 
-    Defualt til X.
+    Default til X.
     :return:
     """
 
-    o_antall = 0
-    x_antall = 0
-
-    for row in BOARD:
-        for element in row:
-            if element == spillerX:
-                x_antall = x_antall + 1
-            elif element == spillerO:
-                o_antall = o_antall + 1
-
-    if o_antall < x_antall:
-        return spillerO
-    else:
-        return spillerX
+    return EMPTY
 
 
+
+
+
+# GAME LOGIC / GUI LOGIC
 def main_game_loop(pos_x, pos_y):
     """
     Hovedmetoden til spillet, binder sammen selve logikken.
@@ -170,6 +158,7 @@ def main_game_loop(pos_x, pos_y):
         legg_brikke_til_i_brettet(next_player, pos_x, pos_y)
 
     show_board(CANVAS, BOARD, spillerX=spillerX, spillerO=spillerO)
+
     if check_victory():
         victory_screen(BOARD, CANVAS, b_rute, h_rute)
 
@@ -190,6 +179,8 @@ def click(mouse_event):
     mouse_y = mouse_event.y
     print("X: " + str(mouse_x) + " Y: " + str(mouse_y))
     pos_x, pos_y = canvas_to_grid(mouse_x, mouse_y)
+    # print("X: " + str(pos_x) + " Y: " + str(pos_y)) #TODO:
+
     main_game_loop(pos_x, pos_y)
 
 def canvas_to_grid(mouse_x, mouse_y):
