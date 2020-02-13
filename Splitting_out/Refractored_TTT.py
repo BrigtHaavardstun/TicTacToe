@@ -6,13 +6,13 @@ Updated on Tue Jan 28 2020
 @author: brigthavardstun
 """
 from tkinter import *
-from ttt_magic import show_board
+from ttt_magic import show_board, victory_screen,draw_screen
 
 """
 Program settings
 """
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 600  # Bredden på skjermen
+HEIGHT = 600  # Høyden på skjermen
 
 # Splitting into three verticals zones
 b_rute = WIDTH/3  #bredde for en rute
@@ -20,6 +20,8 @@ h_rute = HEIGHT/3  #høyde for en rute
 
 """
 Setting up Canvas
+
+Canvas er det vi bruker til å tegne i python
 """
 main = Tk()
 
@@ -28,8 +30,9 @@ CANVAS = Canvas(main, width=WIDTH, height=HEIGHT)
 CANVAS.pack()
 
 """
-Globals
+Globale variabler
 """
+
 # Players
 spillerX = "X"
 spillerO = "O"
@@ -69,36 +72,28 @@ def check_victory():
     # Horizontal
     for row in BOARD:
         if row == list(X_vinn):
-            print("X er vinneren!")
             return True
         elif row == list(O_vinn):
-            print("O er vinneren!")
             return True
 
 
     # Vertical
     for i in range(3):
         if BOARD[0][i] + BOARD[1][i] + BOARD[2][i] == X_vinn:
-            print("X er vinneren!")
             return True
         elif BOARD[0][i] + BOARD[1][i] + BOARD[2][i] == O_vinn:
-            print("O er vinneren!")
             return True
 
     # Diagonals
     if BOARD[0][0] + BOARD[1][1] + BOARD[2][2] == X_vinn:
-        print("X er vinneren!")
         return True
     elif BOARD[0][0] + BOARD[1][1] + BOARD[2][2] == O_vinn:
-        print("O er vinneren!")
         return True
 
 
     if BOARD[0][2] + BOARD[1][1]+BOARD[2][0] == X_vinn:
-        print("X er vinneren!")
         return True
     elif BOARD[0][2] + BOARD[1][1]+BOARD[2][0] == O_vinn:
-        print("O er vinneren!")
         return True
 
     return False
@@ -113,43 +108,11 @@ def check_draw():
     return True
 
 
-def victoryClick(mouseEvent):
-    print("Game Done")
 
 
-def draw_click(mouseEvent):
-    print("Draw")
 
 
-def victory_screen():
-    CANVAS.bind("<Button-1>", victoryClick)  # rebinds a click so we cannot continue to play the game.
 
-
-def draw_screen():
-    CANVAS.bind("<Button-1>", draw_click)  # rebinds a click so we cannot continue to play the game.
-
-
-def main_game_loop(pos_x, pos_y):
-    """
-    Hovedmetoden til spillet, binder sammen selve logikken.
-
-    Denne skal være gitt.
-    :param pos_x:
-    :param pos_y:
-    :return:
-    """
-    next_player = get_next_player()
-
-    if ledig_plass(pos_x, pos_y):
-        legg_brikke_til_i_brettet(next_player, pos_x, pos_y)
-
-    victory = check_victory()
-    if victory:
-        victory_screen()
-    draw = check_draw()
-    if draw:
-        draw_screen()
-    show_board(CANVAS, BOARD, spillerX=spillerX, spillerO=spillerO)
 
 
 def legg_brikke_til_i_brettet(player, x, y):
@@ -192,7 +155,28 @@ def get_next_player():
         return spillerX
 
 
+def main_game_loop(pos_x, pos_y):
+    """
+    Hovedmetoden til spillet, binder sammen selve logikken.
 
+    Denne skal være gitt.
+    :param pos_x:
+    :param pos_y:
+    :return:
+    """
+    next_player = get_next_player()
+
+    if ledig_plass(pos_x, pos_y):
+        legg_brikke_til_i_brettet(next_player, pos_x, pos_y)
+
+    show_board(CANVAS, BOARD, spillerX=spillerX, spillerO=spillerO)
+    if check_victory():
+        victory_screen(BOARD, CANVAS, b_rute, h_rute)
+
+    if check_draw():
+        draw_screen(BOARD, CANVAS)
+
+    show_board(CANVAS, BOARD, spillerX=spillerX, spillerO=spillerO)
 
 # tells the canvas to run "click"-function when we click the canvas
 def click(mouse_event):
@@ -218,8 +202,12 @@ def canvas_to_grid(mouse_x, mouse_y):
     y_pos = int(mouse_y / h_rute)
     return x_pos, y_pos
 
-CANVAS.bind("<Button-1>", click)  # This makes a "click" on the canvas board call the method "click()"
+
+
+
 
 if __name__ == '__main__':
+    CANVAS.bind("<Button-1>", click)  # This makes a "click" on the canvas board call the method "click()"
     show_board(CANVAS, BOARD, spillerX, spillerO)
+
     mainloop()
