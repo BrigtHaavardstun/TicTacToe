@@ -1,9 +1,9 @@
 # Code overview
 
 ## metoder
-* Ledig_plass()
-* legg_brikke_til_i_brettet()
 * get_next_player()
+* legg_brikke_til_i_brettet()
+* Ledig_plass()
 * check_victory()
 * check_draw()
 
