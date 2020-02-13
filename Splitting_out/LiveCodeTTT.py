@@ -102,6 +102,10 @@ def check_victory():
 
 
 def check_draw():
+    """
+    Gir True hvis hele brettet er fullt.
+    :return:
+    """
     return False
 
 
